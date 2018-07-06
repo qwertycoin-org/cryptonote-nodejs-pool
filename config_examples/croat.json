@@ -1,16 +1,16 @@
 {
     "poolHost": "your.pool.host",
 
-    "coin": "haven",
-    "symbol": "XHV",
-    "coinUnits": 1000000000000,
+    "coin": "croat",
+    "symbol": "CROAT",
+    "coinUnits": 100000000000,
     "coinDecimalPlaces": 4,
-    "coinDifficultyTarget": 120,
+    "coinDifficultyTarget": 60,
 
     "daemonType": "default",
-    "cnAlgorithm": "cryptonight_heavy",
-    "cnVariant": null,
-    "cnBlobType": 0,
+    "cnAlgorithm": "cryptonight",
+    "cnVariant": 0,
+    "cnBlobType": 2,
 
     "logging": {
         "files": {
@@ -28,7 +28,7 @@
         "enabled": true,
         "clusterForks": "auto",
         "poolAddress": "** Your pool wallet address **",
-        "intAddressPrefix": 841588,
+        "intAddressPrefix": 66,
         "blockRefreshInterval": 1000,
         "minerTimeout": 900,
         "sslCert": "./cert.pem",
@@ -71,7 +71,7 @@
         "varDiff": {
             "minDiff": 100,
             "maxDiff": 100000000,
-            "targetTime": 60,
+            "targetTime": 40,
             "retargetTime": 30,
             "variancePercent": 30,
             "maxJump": 100
@@ -106,25 +106,25 @@
 
     "payments": {
         "enabled": true,
-        "interval": 1800,
-        "maxAddresses": 50,
-        "mixin": 5,
+        "interval": 600,
+        "maxAddresses": 100,
+        "mixin": 1,
         "priority": 0,
-        "transferFee": 5000000000,
-        "dynamicTransferFee": true,
+        "transferFee": 50000000,
+        "dynamicTransferFee": false,
         "minerPayFee" : true,
-        "minPayment": 1000000000000,
+        "minPayment": 100000000000,
         "maxPayment": null,
-        "maxTransactionAmount": 0,
+        "maxTransactionAmount": 500000000000000,
         "denomination": 100000000000
     },
 
     "blockUnlocker": {
         "enabled": true,
         "interval": 30,
-        "depth": 60,
+        "depth": 10,
         "poolFee": 0.8,
-        "devDonation": 0.2,
+        "devDonation": 0.0,
         "networkFee": 0.0
     },
 
@@ -147,12 +147,12 @@
 
     "daemon": {
         "host": "127.0.0.1",
-        "port": 17750
+        "port": 46348
     },
 
     "wallet": {
         "host": "127.0.0.1",
-        "port": 17752
+        "port": 46349
     },
 
     "redis": {
@@ -250,7 +250,7 @@
     },
 
     "prices": {
-        "source": "tradeogre",
+        "source": "cryptonator",
         "currency": "USD"
     },
     

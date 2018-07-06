@@ -113,6 +113,7 @@
         "dynamicTransferFee": true,
         "minerPayFee" : true,
         "minPayment": 1000000000,
+        "maxPayment": null,
         "maxTransactionAmount": 0,
         "denomination": 100000000
     },
@@ -230,8 +231,9 @@
         },
         "botCommands": {
             "stats": "/stats",
-            "enable": "/enable",
-            "disable": "/disable"
+            "report": "/report",
+            "notify": "/notify",
+            "blocks": "/blocks"
         }
     },
     
@@ -300,6 +302,10 @@
             "payments": {
                 "enabled": true
             }
+        },
+        "blocks": {
+            "enabled": true,
+            "days": 30
         }
     }
 }

@@ -1,5 +1,5 @@
 {
-    "miningPool": "Pool de cryptomonnaie",
+    "miningPool": "Mining Pool",
     "dashboard": "Tableau de bord",
     "gettingStarted": "Comment démarrer",
     "yourStats": "Vos statistiques",
@@ -51,6 +51,7 @@
     "blockHash": "Hash du bloc",
     "effort": "Effort",    
     "blocksFoundLast24": "Blocs trouvés dans les 24 dernières heures",
+    "blocksFoundLastDays": "Blocs trouvés dans les derniers {DAYS} jours",
 
     "payments": "Paiements",
     "paymentsHistory": "Historique des paiements",

@@ -7,8 +7,9 @@
     "coinDecimalPlaces": 4,
     "coinDifficultyTarget": 120,
 
+    "daemonType": "default",
     "cnAlgorithm": "cryptonight",
-    "cnVariant": 1,
+    "cnVariant": 4,
     "cnBlobType": 3,
 
     "logging": {
@@ -113,6 +114,7 @@
         "dynamicTransferFee": true,
         "minerPayFee" : true,
         "minPayment": 1000000000000,
+        "maxPayment": null,
         "maxTransactionAmount": 0,
         "denomination": 100000000000
     },
@@ -150,7 +152,7 @@
 
     "wallet": {
         "host": "127.0.0.1",
-        "port": 38082
+        "port": 38083
     },
 
     "redis": {
@@ -230,8 +232,9 @@
         },
         "botCommands": {
             "stats": "/stats",
-            "enable": "/enable",
-            "disable": "/disable"
+            "report": "/report",
+            "notify": "/notify",
+            "blocks": "/blocks"
         }
     },
     
@@ -294,6 +297,10 @@
             "payments": {
                 "enabled": true
             }
+        },
+        "blocks": {
+            "enabled": true,
+            "days": 30
         }
     }
 }

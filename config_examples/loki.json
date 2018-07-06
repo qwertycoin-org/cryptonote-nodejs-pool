@@ -6,6 +6,8 @@
     "coinUnits": 1000000000,
     "coinDecimalPlaces": 4,
     "coinDifficultyTarget": 120,
+
+    "daemonType": "default",
     "cnAlgorithm": "cryptonight_heavy",
     "cnVariant": null,
     "cnBlobType": 0,
@@ -112,6 +114,7 @@
         "dynamicTransferFee": true,
         "minerPayFee" : true,
         "minPayment": 5000000000,
+        "maxPayment": null,
         "maxTransactionAmount": 0,
         "denomination": 100000000
     },
@@ -229,8 +232,9 @@
         },
         "botCommands": {
             "stats": "/stats",
-            "enable": "/enable",
-            "disable": "/disable"
+            "report": "/report",
+            "notify": "/notify",
+            "blocks": "/blocks"
         }
     },
     
@@ -299,6 +303,10 @@
             "payments": {
                 "enabled": true
             }
+        },
+        "blocks": {
+            "enabled": true,
+            "days": 30
         }
     }
 }

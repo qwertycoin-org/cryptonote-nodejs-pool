@@ -128,7 +128,7 @@ function updateText(elementId, text){
 
 // Convert float to string
 function floatToString(float) {
-    return float.toFixed(6).replace(/[0\.]+$/, '');
+    return float.toFixed(6).replace(/\.0+$|0+$/, '');
 }
 
 // Format number
@@ -202,14 +202,14 @@ function getReadableHashRateString(hashrate){
     if (!hashrate) hashrate = 0;
 
     var i = 0;
-    var byteUnits = [' H', ' KH', ' MH', ' GH', ' TH', ' PH' ];
+    var byteUnits = [' H', ' kH', ' MH', ' GH', ' TH', ' PH' ];
     if (hashrate > 0) {
         while (hashrate > 1000){
             hashrate = hashrate / 1000;
             i++;
         }
     }
-    return hashrate.toFixed(2) + byteUnits[i];
+    return parseFloat(hashrate).toFixed(2) + byteUnits[i];
 }
     
 // Get coin decimal places
@@ -238,25 +238,7 @@ function formatDifficulty(x) {
 
 // Format luck / current effort
 function formatLuck(difficulty, shares) {
-    // Only an approximation to reverse the calculations done in pool.js, because the shares with their respective times are not recorded in redis
-    // Approximation assumes equal pool hashrate for the whole round
-    // Could potentially be replaced by storing the sum of all job.difficulty in the redis db.
-    if (lastStats.config.slushMiningEnabled) {
-        // Uses integral calculus to calculate the average of a dynamic function
-        var accurateShares = 1/lastStats.config.blockTime * (  // 1/blockTime to get the average
-            shares * lastStats.config.weight * (                  // Basically calculates the 'area below the graph' between 0 and blockTime
-                1 - Math.pow( 
-                    Math.E, 
-                    ((- lastStats.config.blockTime) / lastStats.config.weight)  // blockTime is equal to the highest possible result of (dateNowSeconds - scoreTime)
-                )
-            )
-        );
-    }
-    else {
-        var accurateShares = shares;
-    }
-        
-    var percent = Math.round(accurateShares / difficulty * 100);
+    var percent = Math.round(shares / difficulty * 100);
     if(!percent){
         return '<span class="luckGood">?</span>';
     }
@@ -284,12 +266,12 @@ function getPoolHost() {
 
 // Return transaction URL
 function getTransactionUrl(id) {
-    return transactionExplorer.replace('{symbol}', lastStats.config.symbol.toLowerCase()).replace('{id}', id);
+    return transactionExplorer.replace(new RegExp('{symbol}', 'g'), lastStats.config.symbol.toLowerCase()).replace(new RegExp('{id}', 'g'), id);
 }
 
 // Return blockchain explorer URL
 function getBlockchainUrl(id) {
-    return blockchainExplorer.replace('{symbol}', lastStats.config.symbol.toLowerCase()).replace('{id}', id);    
+    return blockchainExplorer.replace(new RegExp('{symbol}', 'g'), lastStats.config.symbol.toLowerCase()).replace(new RegExp('{id}', 'g'), id);    
 }
  
 /**

@@ -100,11 +100,7 @@ Community / Support
 
 #### Pools Using This Software
 
-* https://graft.blockhashmining.com/
-* https://haven.blockhashmining.com/
-* https://loki.blockhashmining.com/
-* https://masari.blockhashmining.com/
-* https://stellite.blockhashmining.com/
+* https://imaginary.stream/
 * https://graft.anypool.net/
 * https://graft.dark-mine.su/
 * http://itns.proxpool.com/
@@ -141,9 +137,17 @@ sudo apt-get install redis-server
 ##### Seriously
 Those are legitimate requirements. If you use old versions of Node.js or Redis that may come with your system package manager then you will have problems. Follow the linked instructions to get the last stable versions.
 
-
 [**Redis warning**](http://redis.io/topics/security): It'sa good idea to learn about and understand software that
 you are using - a good place to start with redis is [data persistence](http://redis.io/topics/persistence).
+
+**Do not run the pool as root** : create a new user without ssh access to avoid security issues :
+```bash
+sudo adduser --disabled-password --disabled-login your-user
+```
+To login with this user : 
+```
+sudo su - your-user
+```
 
 #### 1) Downloading & Installing
 
@@ -180,6 +184,9 @@ Explanation for each field:
   
 /* Coin network time to mine one block, see DIFFICULTY_TARGET constant in DAEMON_CODE/src/cryptonote_config.h */
 "coinDifficultyTarget": 120,
+
+/* Set daemon type. Supported values: default, forknote (Fix block height + 1), bytecoin (ByteCoin Wallet RPC API) */
+"daemonType": "default",
 
 /* Set Cryptonight algorithm settings.
    Supported algorithms: cryptonight (default). cryptonight_light and cryptonight_heavy
@@ -320,9 +327,7 @@ Explanation for each field:
     More about it here: https://mining.bitcoin.cz/help/#!/manual/rewards */
     "slushMining": {
         "enabled": false, // Enables slush mining. Recommended for pools catering to professional miners
-        "weight": 300, // Defines how fast the score assigned to a share declines in time. The value should roughly be equivalent to the average round duration in seconds divided by 8. When deviating by too much numbers may get too high for JS.
-        "blockTime": 60
-        "lastBlockCheckRate": 1 // How often the pool checks the timestamp of the last block. Lower numbers increase load but raise precision of the share value
+        "weight": 300 // Defines how fast the score assigned to a share declines in time. The value should roughly be equivalent to the average round duration in seconds divided by 8. When deviating by too much numbers may get too high for JS.
     }
 },
 
@@ -337,6 +342,7 @@ Explanation for each field:
     "dynamicTransferFee": true, // Enable dynamic transfer fee (fee is multiplied by number of miners)
     "minerPayFee" : true, // Miner pays the transfer fee instead of pool owner when using dynamic transfer fee
     "minPayment": 100000000000, // Miner balance required before sending payment
+    "maxPayment": null, // Maximum miner balance allowed in miner settings
     "maxTransactionAmount": 0, // Split transactions by this amount (to prevent "too big transaction" error)
     "denomination": 10000000000 // Truncate to this precision and store remainder
 },
@@ -554,7 +560,12 @@ Explanation for each field:
         "payments": { // Payment chart uses all user payments data stored in DB
             "enabled": true
         }
+    },
+    "blocks": {
+        "enabled": true,
+        "days": 30 // Number of days displayed in chart (if value is 1, display last 24 hours)
     }
+}
 ```
 
 #### 3) Start the pool
@@ -586,12 +597,12 @@ node init.js -module=api
 [Example screenshot](http://i.imgur.com/SEgrI3b.png) of running the pool in single module mode with tmux.
 
 To keep your pool up, on operating system with systemd, you can create add your pool software as a service.  
-Use this [example](https://github.com/VirtuBox/cryptonote-nodejs-pool/blob/master/utils/cryptonote-nodejs-pool.service) and create your service file `/lib/systemd/system/cryptonote-nodejs-pool.service`
+Use this [example](https://github.com/dvandal/cryptonote-nodejs-pool/blob/master/deployment/cryptonote-nodejs-pool.service) to create the systemd service `/lib/systemd/system/cryptonote-nodejs-pool.service`
 Then enable and start the service with the following commands : 
 
 ```
-systemctl enable cryptonote-nodejs-pool.service
-systemctl start cryptonote-nodejs-pool.service
+sudo systemctl enable cryptonote-nodejs-pool.service
+sudo systemctl start cryptonote-nodejs-pool.service
 ```
 
 #### 4) Host the front-end
@@ -678,7 +689,8 @@ You no longer need to include the port in the variable because of the proxy conn
 server {
     server_name api.poolhost.com
     listen 443 ssl http2;
-
+    listen [::]:443 ssl http2;
+    
     ssl_certificate /your/ssl/certificate;
     ssl_certificate_key /your/ssl/certificate_key;
 
@@ -726,7 +738,7 @@ curl 127.0.0.1:18081/json_rpc -d '{"method":"getblockheaderbyheight","params":{"
 ### Monitoring Your Pool
 
 * To inspect and make changes to redis I suggest using [redis-commander](https://github.com/joeferner/redis-commander)
-* To monitor server load for CPU, Network, IO, etc - I suggest using [New Relic](http://newrelic.com/)
+* To monitor server load for CPU, Network, IO, etc - I suggest using [Netdata](https://github.com/firehol/netdata)
 * To keep your pool node script running in background, logging to file, and automatically restarting if it crashes - I suggest using [forever](https://github.com/nodejitsu/forever) or [PM2](https://github.com/Unitech/pm2)
 
 
