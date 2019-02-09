@@ -8,8 +8,8 @@
     "coinDifficultyTarget": 120,
 
     "daemonType": "default",
-    "cnAlgorithm": "cryptonight_heavy",
-    "cnVariant": null,
+    "cnAlgorithm": "cryptonight",
+    "cnVariant": 0,
     "cnBlobType": 0,
 
     "logging": {
@@ -108,12 +108,12 @@
         "enabled": true,
         "interval": 1800,
         "maxAddresses": 50,
-        "mixin": 12,
+        "mixin": 2,
         "priority": 0,
-        "transferFee": 1000,
+        "transferFee": 500000000,
         "dynamicTransferFee": true,
         "minerPayFee" : true,
-        "minPayment": 1000000000000,
+        "minPayment": 100000000000,
         "maxTransactionAmount": 0,
         "denomination": 100000000
     },
